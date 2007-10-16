@@ -1,0 +1,1 @@
+Chat bot for Campfire (http://campfirenow.com)
