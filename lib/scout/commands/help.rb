@@ -1,15 +1,19 @@
 module Scout
   module Commands
     class Help < Scout::Command
+      trigger :help
+      help    "Show this"
+      
       def process
-        paste "=== Scout Chat Bot ===\n" +
-              "To send a command type:\n" +
-              "  @#{bot.name} command [arguments]\n\n" +
-              "Available commands:\n" +
-              " say text               (speak throught the bot)\n" +
-              " vote start|stop|+1|-1  (count votes)\n" +
-              " define word            (search for definitions)\n" +
-              " help                   (show this help message)"
+        out = returning [] do |p|
+          p << "@#{bot.name} command [arguments]"
+          p << ""
+          p << "Available commands:"
+          COMMANDS.each_pair do |name, klass|
+            p << name.ljust(14) + DESCRIPTIONS[klass]
+          end
+        end
+        paste out.join("\n")
       end
     end
   end

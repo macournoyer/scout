@@ -1,6 +1,9 @@
 module Scout
   module Commands
     class Vote < Scout::Command
+      trigger :vote
+      help    "Start a poll (start, +1|-1, stop)"
+      
       def process
         case args.first
         when 'start'

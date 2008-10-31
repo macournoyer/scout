@@ -28,12 +28,13 @@ module Scout
     
     def process_commands
       fetch_commands.each do |command|
-        command.process if command
+        command.process! if command
       end
     end
     
     def fetch_commands
       @room.listen.collect do |message|
+        puts message[:person] + ": " + message[:message]
         Command.parse(message, self)
       end
     end

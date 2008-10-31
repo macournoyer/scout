@@ -1,62 +1,14 @@
 #!/usr/bin/env ruby
-#
-#  Created by macournoyer on 2007-10-10.
-#  Copyright (c) 2007. All rights reserved.
-
-begin
-  require 'rubygems'
-rescue LoadError
-  # no rubygems to load, so we fail silently
-end
-
-require 'optparse'
 require File.dirname(__FILE__) + '/../lib/scout'
 
-# NOTE: the option -p/--path= is given as an example, and should probably be replaced in your application.
+file = ARGV.first || raise("Config file required")
+config = YAML.load_file(file).symbolize_keys
 
-OPTIONS = {
-  :subdomain => nil,
-  :email => nil,
-  :password => nil,
-  :room => nil,
-  :name => 'bot'
-}
-MANDATORY_OPTIONS = %w( subdomain email password room )
+campfire = Tinder::Campfire.new(config[:subdomain])
+campfire.login(config[:email], config[:password])
+room = campfire.find_room_by_name(config[:room])
 
-parser = OptionParser.new do |opts|
-  opts.banner = <<BANNER
-Scout Chat Bot
-
-Usage: #{File.basename($0)} [options]
-
-Options are:
-BANNER
-  opts.separator ""
-  opts.on("-s", "--subdomain=SUBDOMAIN", String,
-          "The Campfire subdomain") { |OPTIONS[:subdomain]| }
-  opts.on("-e", "--email=EMAIL", String,
-          "Email used to login") { |OPTIONS[:email]| }
-  opts.on("-p", "--password=PASSWORD", String,
-          "Password used to login") { |OPTIONS[:password]| }
-  opts.on("-r", "--room=ROOM", String,
-          "Name of the room to monitor") { |OPTIONS[:room]| }
-  opts.on("-n", "--name=NAME", String,
-          "Name of the bot") { |OPTIONS[:name]| }
-  opts.on("-h", "--help",
-          "Show this help message.") { puts opts; exit }
-  opts.parse!(ARGV)
-
-  if MANDATORY_OPTIONS && MANDATORY_OPTIONS.find { |option| OPTIONS[option.to_sym].nil? }
-    puts opts; exit
-  end
-end
-
-# do stuff
-campfire = Tinder::Campfire.new OPTIONS[:subdomain]
-campfire.login OPTIONS[:email], OPTIONS[:password]
-room = campfire.find_room_by_name OPTIONS[:room]
-
-bot = Scout::Bot.new(room, :name => OPTIONS[:name])
+bot = Scout::Bot.new(room, :name => config[:name])
 
 puts "Starting the bot, CTRL+C to stop ..."
 bot.listen!
