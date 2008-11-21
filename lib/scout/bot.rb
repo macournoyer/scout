@@ -19,6 +19,7 @@ module Scout
         @room.leave
       end
       
+      puts "Starting the bot, CTRL+C to stop ..."
       while @continue
         @room.join
         process_commands
@@ -37,6 +38,10 @@ module Scout
         puts message[:person] + ": " + message[:message]
         Command.parse(message, self)
       end
+    rescue Exception
+      puts "ERROR fetching commands: #{$!}"
+      puts $@
+      []
     end
   end
 end

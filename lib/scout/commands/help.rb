@@ -6,7 +6,7 @@ module Scout
       
       def process
         out = returning [] do |p|
-          p << "@#{bot.name} command [arguments]"
+          p << "@#{bot.name} <command> [arguments]"
           p << ""
           p << "Available commands:"
           COMMANDS.each_pair do |name, klass|

@@ -10,11 +10,11 @@ module Scout
 |        LUNCHSTATUS        |
 +---------------------------+
 |       U HAS LONCHE?       |
-|        > oh course        |
-|        > noz              |
-|        > wa???            |
+|        > i has            |
 |        > smash            |
-|        > LVS              |
+|        > VSL              |
+|        > Samich stashiun  |
+|        > Moishes          |
 \\---------------------------/
 EOS
       @@lonches = {}

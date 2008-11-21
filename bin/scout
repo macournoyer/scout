@@ -10,5 +10,4 @@ room = campfire.find_room_by_name(config[:room])
 
 bot = Scout::Bot.new(room, :name => config[:name])
 
-puts "Starting the bot, CTRL+C to stop ..."
 bot.listen!

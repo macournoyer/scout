@@ -40,7 +40,7 @@ module Scout
     
     def process!
       process
-    rescue
+    rescue Object
       speak "Error processing command: #{$!.message}"
       puts "#{$!}\n\t" + $!.backtrace.join("\n\t")
     end
