@@ -1,14 +1,15 @@
 require File.dirname(__FILE__) + '/test_helper'
 
-class TestCommand < Test::Unit::TestCase
+class CommandTest < Test::Unit::TestCase
   def setup
     @room = Tinder::Room.new stub, 1, 'Test room'
     @bot = Scout::Bot.new @room
-    
   end
   
   def test_tokenize
     assert_equal ['marc', 'say', %w(hi)], Scout::Command.tokenize!({:person => 'marc', :message => '@bot say hi'}, @bot)
+    assert_equal ['marc', 'say', %w(hi)], Scout::Command.tokenize!({:person => 'marc', :message => 'bot: say hi'}, @bot)
+    assert_equal ['marc', 'say', %w(hi)], Scout::Command.tokenize!({:person => 'marc', :message => '@bot: say hi'}, @bot)
     assert_equal ['marc', 'say', %w(hi there)], Scout::Command.tokenize!({:person => 'marc', :message => '@bot say hi there'}, @bot)
     assert_equal nil, Scout::Command.tokenize!({:person => 'marc', :message => 'wtf'}, @bot)
     assert_equal ['marc', 'yo', []], Scout::Command.tokenize!({:person => 'marc', :message => '@bot yo'}, @bot)

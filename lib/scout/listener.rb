@@ -1,5 +1,7 @@
 module Scout
   class Listener
+    include Processable
+    
     attr_reader :from, :bot, :message
     
     LISTENERS = []
@@ -35,32 +37,6 @@ module Scout
       @from = from
       @bot = bot
       @message = message
-    end
-    
-    def process
-    end
-    
-    def process!
-      process
-    rescue Object
-      speak "Error processing listener #{self.class.name}: #{$!.message}"
-      puts "#{$!}\n\t" + $!.backtrace.join("\n\t")
-    end
-    
-    def room
-      @bot.room
-    end
-    
-    def speak(message)
-      @bot.room.speak message
-    end
-    
-    def paste(message)
-      @bot.room.paste message
-    end
-    
-    def run_command(trigger, *args)
-      Command.find(trigger).new(from, bot, trigger, args).process!
     end
   end
 end

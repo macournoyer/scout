@@ -1,5 +1,7 @@
 module Scout
   class Command
+    include Processable
+    
     attr_reader :from, :bot, :command, :args
     
     COMMANDS = {}
@@ -19,7 +21,7 @@ module Scout
       end
       
       def tokenize!(message, bot)
-        full, command, args = message[:message].match(/^@?#{bot.name}: (\w+)\s?((?:.+\s?)*)$/i).to_a
+        full, command, args = message[:message].match(/^@?#{bot.name}:? (\w+)\s?((?:.+\s?)*)$/i).to_a
         [message[:person], command, args.split] if command
       end
       
@@ -37,28 +39,6 @@ module Scout
       @bot = bot
       @command = command
       @args = args
-    end
-    
-    def process
-    end
-    
-    def process!
-      process
-    rescue Object
-      speak "Error processing command: #{$!.message}"
-      puts "#{$!}\n\t" + $!.backtrace.join("\n\t")
-    end
-    
-    def room
-      @bot.room
-    end
-    
-    def speak(message)
-      @bot.room.speak message
-    end
-    
-    def paste(message)
-      @bot.room.paste message
     end
   end
 end
