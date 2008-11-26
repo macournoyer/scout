@@ -6,16 +6,20 @@ module Scout
     DESCRIPTIONS = {}
     
     class << self
+      def find(trigger)
+        COMMANDS[trigger.to_s] || Scout::Commands::Invalid
+      end
+      
       def parse(message, bot)
         if tokens = tokenize!(message, bot)
           person, command, args = *tokens
-          command_class = COMMANDS[command] || Scout::Commands::Invalid
+          command_class = find(command)
           command_class.new(person, bot, command, args)
         end
       end
       
       def tokenize!(message, bot)
-        full, command, args = message[:message].match(/^#{bot.name}: (\w+)\s?((?:.+\s?)*)$/i).to_a
+        full, command, args = message[:message].match(/^@?#{bot.name}: (\w+)\s?((?:.+\s?)*)$/i).to_a
         [message[:person], command, args.split] if command
       end
       
