@@ -20,13 +20,17 @@ module Scout
       end
       
       puts "Starting the bot, CTRL+C to stop ..."
-      while @continue
-        @room.join
-        messages = fetch_messages
-        process_commands(messages)
-        notify_listeners(messages)
-        sleep @sleep
-      end
+      process while @continue
+    end
+    
+    def process
+      messages = fetch_messages
+      process_commands(messages)
+      notify_listeners(messages)
+      sleep @sleep
+    rescue Exception
+      puts "Error while listening: #{$!}"
+      puts $@
     end
     
     def process_commands(messages)
