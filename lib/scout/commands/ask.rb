@@ -11,7 +11,7 @@ module Scout
       help    "Ask a stupid question"
       
       def process
-        speak "http://LetMeGoogleThatForYou.com/?q=" + CGI.escape(args.join(' '))
+        speak "http://LetMeGoogleThatForYou.com/?q=" + CGI.escape(([command] + args).join(' '))
       end
     end
   end
