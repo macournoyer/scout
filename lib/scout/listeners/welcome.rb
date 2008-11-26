@@ -5,7 +5,7 @@ module Scout
       
       def process
         return if from.downcase == "bot"
-        speak "#{from}: ohaie! how are you?"
+        speak "#{from}: ohaie!"
       end
     end
   end

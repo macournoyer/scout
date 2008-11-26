@@ -4,6 +4,7 @@ require "hpricot"
 module Scout
   module Commands
     class Tweet < Scout::Command
+      # TODO put that in a config file or something
       USERNAME = "mtl_on_rails"
       PASSWORD = "mtl_on_rails"
       
@@ -18,7 +19,7 @@ module Scout
       
       def update_tweet(status)
         resource = RestClient::Resource.new("http://twitter.com/statuses/update.xml", USERNAME, PASSWORD)
-        resource.post(:status => status, :source => 'Standout Jobs', :content_type => 'application/xml', :accept => 'application/xml')
+        resource.post(:status => status, :source => 'scout', :content_type => 'application/xml', :accept => 'application/xml')
       end
     end
   end
