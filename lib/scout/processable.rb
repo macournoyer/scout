@@ -15,6 +15,14 @@ module Scout
       @bot.room
     end
     
+    def data
+      @bot.data[self.class.name] ||= {}
+    end
+    
+    def config
+      @bot.config[self.class.name] ||= {}
+    end
+    
     def speak(message)
       @bot.room.speak message
     end

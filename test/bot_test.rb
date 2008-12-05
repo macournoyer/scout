@@ -37,7 +37,7 @@ class BotTest < Test::Unit::TestCase
   end
 
   def test_load_data_file
-    assert_not_nil @bot.data
+    assert_kind_of Hash, @bot.data
   end
   
   def test_write_data_after_process

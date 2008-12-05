@@ -65,7 +65,7 @@ module Scout
     def load_data
       FileUtils.mkdir_p File.dirname(data_file)
       FileUtils.touch data_file
-      @data = YAML.load_file(data_file)
+      @data = YAML.load_file(data_file) || {}
     end
     
     def write_data

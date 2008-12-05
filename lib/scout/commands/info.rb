@@ -16,6 +16,9 @@ awesome   indeed
 
 config
 #{bot.config.to_yaml}
+
+data
+#{bot.data.to_yaml}
 EOS
       end
     end

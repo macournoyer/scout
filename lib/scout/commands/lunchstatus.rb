@@ -2,36 +2,58 @@ module Scout
   module Commands
     class Lunchstatus < Scout::Command
       trigger :lunchstatus
+      trigger :ls
       help    "Compile lunch statuses"
       
-      
-      START_MSG = <<EOS
-/---------------------------\\
-|        LUNCHSTATUS        |
-+---------------------------+
-|       U HAS LONCHE?       |
-|        > i has            |
-|        > smash            |
-|        > VSL              |
-|        > Samich stashiun  |
-|        > Moishes          |
-\\---------------------------/
+      def usage
+        <<-EOS
+== lunchstatus beta 2 ==
+
+Update your lunchstatus:
+  @#{bot.name} lunchstatus <status>
+
+Suggest a place:
+  @#{bot.name} lunchstatus + <place name>
+
+Start over:
+  @#{bot.name} lunchstatus clear
 EOS
-      @@lonches = {}
+      end
+      
+      def statuses
+        data[:statuses] ||= {}
+      end
+      
+      def places
+        data[:places] ||= []
+      end
       
       def process
         if args.empty?
-          paste START_MSG
-          summary
+          paste usage
+          display_places
+          display_statuses
         elsif args.first == "clear"
-          @@lonches.clear
+          statuses.clear
+        elsif args.first == "+"
+          places << args[1..-1].join(" ")
         else
-          @@lonches[from] = args.join(" ")
+          statuses[from] = args.join(" ")
         end
       end
       
-      def summary
-        @@lonches.each_pair do |person, lonche|
+      def display_places
+        speak "> I has lonche"
+        if places.empty?
+          speak "Suggest some place to eat: @#{bot.name} lunchstatus + batcave"
+        end
+        places.each do |place|
+          speak "> #{place}"
+        end
+      end
+      
+      def display_statuses
+        statuses.each_pair do |person, lonche|
           speak "#{person}: #{lonche}"
         end
       end
