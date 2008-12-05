@@ -1,4 +1,6 @@
 module Scout
+  class CommandError < RuntimeError; end
+  
   module Processable
     def process
       raise StandardError, "Oh plz plz, implement #{self.class}\#process"
@@ -6,6 +8,8 @@ module Scout
     
     def process!
       process
+    rescue CommandError
+      speak "Error: " + $!.message
     rescue Object
       speak "Error processing #{self.class.name}: #{$!.message}"
       puts "#{$!}\n\t" + $!.backtrace.join("\n\t")
@@ -20,7 +24,7 @@ module Scout
     end
     
     def config
-      @bot.config[self.class.name] ||= {}
+      @bot.config
     end
     
     def speak(message)

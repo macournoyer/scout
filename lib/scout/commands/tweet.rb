@@ -4,21 +4,21 @@ require "hpricot"
 module Scout
   module Commands
     class Tweet < Scout::Command
-      # TODO put that in a config file or something
-      USERNAME = "mtl_on_rails"
-      PASSWORD = "mtl_on_rails"
-      
       trigger :tweet
-      help    "Sent an update to #{USERNAME} twitter"
+      help    "Sent an update to twitter"
+      
+      def twitter_config
+        config[:twitter] || raise(CommandError, "No twitter configuration")
+      end
       
       def process
         doc = Hpricot(update_tweet(args.join(" ")))
         id = (doc/:status/:id).first.innerHTML
-        speak "http://twitter.com/#{USERNAME}/status/#{id}"
+        speak "http://twitter.com/#{twitter_config[:username]}/status/#{id}"
       end
       
       def update_tweet(status)
-        resource = RestClient::Resource.new("http://twitter.com/statuses/update.xml", USERNAME, PASSWORD)
+        resource = RestClient::Resource.new("http://twitter.com/statuses/update.xml", twitter_config[:username], twitter_config[:password])
         resource.post(:status => status, :source => 'scout', :content_type => 'application/xml', :accept => 'application/xml')
       end
     end
