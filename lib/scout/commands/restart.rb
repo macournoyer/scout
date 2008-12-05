@@ -6,6 +6,7 @@ module Scout
       
       def process
         speak "Restarting ..."
+        log "Restarting ..."
         exec Scout::CMD
       end
     end

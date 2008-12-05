@@ -8,6 +8,8 @@ module Scout
       trigger :when
       trigger :which
       trigger :who
+      trigger :why
+      
       help    "Ask a stupid question"
       
       def process

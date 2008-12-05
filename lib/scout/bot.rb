@@ -17,12 +17,13 @@ module Scout
     
     def listen!
       trap("INT") do
-        puts "Stoping ..."
+        log "Stoping ..."
         @continue = false
         @room.leave
       end
       
-      puts "Starting the bot, CTRL+C to stop ..."
+      log "Starting the bot, CTRL+C to stop ..."
+      @room.speak "ohaie! I'm back!"
       process while @continue
     end
     
@@ -33,8 +34,8 @@ module Scout
       write_data
       sleep @sleep
     rescue Exception
-      puts "Error while listening: #{$!}"
-      puts $@
+      log "Error while listening: #{$!}"
+      log $@
     end
     
     def process_commands(messages)
@@ -53,7 +54,7 @@ module Scout
     
     def fetch_messages
       @room.listen.map do |message|
-        puts message[:person] + ": " + message[:message]
+        log message[:person] + ": " + message[:message]
         message
       end
     end
@@ -70,6 +71,11 @@ module Scout
     
     def write_data
       File.open(data_file, "w") { |file| YAML.dump(@data, file) }
+    end
+    
+    def log(message)
+      puts message
+      
     end
   end
 end

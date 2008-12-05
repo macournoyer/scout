@@ -12,7 +12,7 @@ module Scout
       speak "Error: " + $!.message
     rescue Object
       speak "Error processing #{self.class.name}: #{$!.message}"
-      puts "#{$!}\n\t" + $!.backtrace.join("\n\t")
+      log "#{$!}\n\t" + $!.backtrace.join("\n\t")
     end
     
     def room
@@ -33,6 +33,10 @@ module Scout
     
     def paste(message)
       @bot.room.paste message
+    end
+    
+    def log(message)
+      @bot.log message
     end
     
     def run_command(trigger, *args)
