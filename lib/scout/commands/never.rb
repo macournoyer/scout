@@ -15,7 +15,7 @@ module Scout
       
       def process
         if defined?(@@last_time) && Time.now - @@last_time < 2.minutes
-          speak "I'm too tired to singm sorry..."
+          speak "I'm too tired to sing sorry..."
         else
           @@last_time = Time.now
           LINES.each do |line|

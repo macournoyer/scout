@@ -11,3 +11,8 @@ require 'scout/command'
 require 'scout/listener'
 
 Dir[File.dirname(__FILE__) + '/scout/{commands,listeners}/*.rb'].each(&method(:require))
+
+module Scout
+  ROOT = File.expand_path(File.dirname(__FILE__) + "/..")
+  CMD  = ([$0] + $*).join(" ")
+end
