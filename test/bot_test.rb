@@ -32,6 +32,20 @@ class BotTest < Test::Unit::TestCase
     @bot.process_commands([message])
   end
   
+  def test_has_data_file
+    assert_match "/data/bot.yml", @bot.data_file
+  end
+
+  def test_load_data_file
+    assert_not_nil @bot.data
+  end
+  
+  def test_write_data_after_process
+    room_returns # nothing
+    @bot.expects(:write_data).once
+    @bot.process
+  end
+  
   private
     def room_returns(*msgs)
       @room.stubs(:listen).returns(msgs)

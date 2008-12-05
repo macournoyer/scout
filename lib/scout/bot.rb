@@ -2,14 +2,17 @@ module Scout
   class InvalidRoom < StandardError; end
   
   class Bot
-    attr_accessor :name, :room
+    attr_accessor :name, :room, :config, :data
     
     def initialize(room, options={})
-      raise InvalidRoom, 'You need to supply a Tinder::Room object' unless room.is_a? Tinder::Room
+      raise InvalidRoom, 'You need to supply a Tinder::Room object' unless room.is_a?(Tinder::Room)
       @room     = room
       @name     = options[:name] || 'bot'
       @sleep    = options[:sleep] || 1
+      @config   = options[:config]
       @continue = true
+      
+      load_data
     end
     
     def listen!
@@ -27,6 +30,7 @@ module Scout
       messages = fetch_messages
       process_commands(messages)
       notify_listeners(messages)
+      write_data
       sleep @sleep
     rescue Exception
       puts "Error while listening: #{$!}"
@@ -52,6 +56,20 @@ module Scout
         puts message[:person] + ": " + message[:message]
         message
       end
+    end
+    
+    def data_file
+      ROOT + "/data/#{name}.yml"
+    end
+    
+    def load_data
+      FileUtils.mkdir_p File.dirname(data_file)
+      FileUtils.touch data_file
+      @data = YAML.load_file(data_file)
+    end
+    
+    def write_data
+      File.open(data_file, "w") { |file| YAML.dump(@data, file) }
     end
   end
 end

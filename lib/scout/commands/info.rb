@@ -13,6 +13,9 @@ root      #{Scout::ROOT}
 command   #{Scout::CMD}
 PID       #{Process.pid}
 awesome   indeed
+
+config
+#{bot.config.to_yaml}
 EOS
       end
     end

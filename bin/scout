@@ -5,9 +5,9 @@ file = ARGV.first || raise("Config file required")
 config = YAML.load_file(file).symbolize_keys
 
 campfire = Tinder::Campfire.new(config[:subdomain])
-campfire.login(config[:email], config[:password])
+campfire.login(config[:email], config.delete(:password))
 room = campfire.find_room_by_name(config[:room])
 
-bot = Scout::Bot.new(room, :name => config[:name])
+bot = Scout::Bot.new(room, :name => config[:name], :config => config)
 
 bot.listen!

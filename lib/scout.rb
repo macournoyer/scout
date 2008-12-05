@@ -1,6 +1,7 @@
 $:.unshift File.dirname(__FILE__)
 
 require 'rubygems'
+require 'fileutils'
 require 'tinder'
 require 'active_support'
 
