@@ -9,7 +9,8 @@ module Scout
       reacts_to LINK_RE
       
       def process
-        if page_title = extract_page_title(message[LINK_RE, 1])
+        page_title = extract_page_title(message[LINK_RE, 1])
+        unless page_title.blank?
           speak "Last link: #{page_title}"
         end
       end
