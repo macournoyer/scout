@@ -23,6 +23,7 @@ module Scout
       end
       
       log "Starting the bot, CTRL+C to stop ..."
+      @room.join
       @room.speak "ohaie! I'm back!"
       process while @continue
     end
@@ -33,6 +34,9 @@ module Scout
       notify_listeners(messages)
       write_data
       sleep @sleep
+    rescue Timeout::Error
+      log "Timeout while listening: #{$!}, rejoining room ..."
+      @room.join(true)
     rescue Exception
       log "Error while listening: #{$!}"
       log $@
@@ -75,7 +79,6 @@ module Scout
     
     def log(message)
       puts message
-      
     end
   end
 end
