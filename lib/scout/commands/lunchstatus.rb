@@ -33,7 +33,10 @@ EOS
           paste usage
           display_places
           display_statuses
+        elsif args.first == "reset"
+          statuses.clear
         elsif args.first == "clear"
+          places.clear
           statuses.clear
         elsif args.first == "+"
           places << args[1..-1].join(" ")
