@@ -7,14 +7,10 @@ module Scout
       
       def usage
         <<-EOS
-== lunchstatus beta 2 ==
-
 Update your lunchstatus:
   @#{bot.name} lunchstatus <status>
-
 Suggest a place:
   @#{bot.name} lunchstatus + <place name>
-
 Start over:
   @#{bot.name} lunchstatus clear
 EOS
@@ -30,9 +26,9 @@ EOS
       
       def process
         if args.empty?
+          paste [places_message, statuses_message].flatten.join("\n")
+        elsif args.first == "help"
           paste usage
-          display_places
-          display_statuses
         elsif args.first == "reset"
           statuses.clear
         elsif args.first == "clear"
@@ -45,20 +41,25 @@ EOS
         end
       end
       
-      def display_places
-        speak "> I has lonche"
+      def places_message
+        out = []
+        out << "Where to lunch?"
         if places.empty?
-          speak "Suggest some place to eat: @#{bot.name} lunchstatus + batcave"
+          out << "  (Suggest some place to eat: @#{bot.name} lunchstatus + batcave)"
         end
         places.each do |place|
-          speak "> #{place}"
+          out << "  #{place}"
         end
+        out
       end
       
-      def display_statuses
+      def statuses_message
+        out = []
+        out << "Statuses:"
         statuses.each_pair do |person, lonche|
-          speak "#{person}: #{lonche}"
+          out << "  #{person}: #{lonche}"
         end
+        out
       end
     end
   end
