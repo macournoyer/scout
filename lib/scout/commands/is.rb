@@ -1,11 +1,11 @@
 module Scout
   module Commands
-    class IsIt < Scout::Command
-      trigger :"is it"
+    class Is < Scout::Command
+      trigger :is
       help    "Ask anything!"
       
       def process
-        speak "#{from}: yes, it's #{args.join(' ')}"
+        speak "#{from}: yes"
       end
     end
   end
