@@ -10,8 +10,8 @@ class LunchstatusTest < Test::Unit::TestCase
   def test_display_places
     @command.stubs(:args).returns([])
     @command.expects(:paste)
-    @command.expects(:display_places)
-    @command.expects(:display_statuses)
+    @command.expects(:places_message)
+    @command.expects(:statuses_message)
     @command.process
   end
 
