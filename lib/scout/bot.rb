@@ -42,7 +42,7 @@ module Scout
       log $@
     end
     
-    def process_commands(messages)
+    def process_commands(messages);
       messages.each do |message|
         command = Command.parse(message, self)
         command.process! if command

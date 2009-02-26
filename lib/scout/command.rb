@@ -8,10 +8,14 @@ module Scout
     DESCRIPTIONS = {}
     
     class << self
-      def find(trigger)
-        COMMANDS[trigger.to_s] || Scout::Commands::Invalid
+      def trigger(name)
+        COMMANDS[name.to_s] = self
       end
       
+      def help(value)
+        DESCRIPTIONS[self] = value
+      end
+
       def parse(message, bot)
         if tokens = tokenize!(message, bot)
           person, command, args = *tokens
@@ -25,12 +29,8 @@ module Scout
         [message[:person], command, args.split] if command
       end
       
-      def trigger(name)
-        COMMANDS[name.to_s] = self
-      end
-      
-      def help(value)
-        DESCRIPTIONS[self] = value
+      def find(trigger)
+        COMMANDS[trigger.to_s] || Scout::Commands::Invalid
       end
     end
         

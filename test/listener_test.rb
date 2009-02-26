@@ -7,6 +7,6 @@ class ListenerTest < Test::Unit::TestCase
   end
   
   def test_notify_welcome
-    assert_kind_of Scout::Listeners::Welcome, Scout::Listener.notify({:person => 'marc', :message => 'Bob has entered the room'}, @bot).first
+    assert_kind_of Scout::Listeners::Welcome, Scout::Listener.notify({:person => 'marc', :message => 'Bob has entered the room'}, @bot).last
   end
 end
