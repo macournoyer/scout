@@ -6,8 +6,10 @@ module Scout
       def process
         return if from.downcase == "bot"
         return unless from.match(/alexandra/i)
-        speak "#{@bot.name} coffeestatus clear"
-        speak "#{@bot.name} coffeestatus"
+        if Time.now.hour <= 11
+          speak "#{@bot.name} coffeestatus clear"
+          speak "#{@bot.name} coffeestatus"
+        end
       end
       
     end

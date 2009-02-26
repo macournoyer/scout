@@ -13,7 +13,7 @@ class CoffeeGreeterTest < Test::Unit::TestCase
   def test_should_trigger_when_alexandra_joins
     coffee_greeter_listener = Scout::Listener.notify( {:person => 'Alexandra', :message => 'has entered the room'}, @bot).first
     assert_kind_of Scout::Listeners::CoffeeGreeter, coffee_greeter_listener
-    
+    Time.stubs(:now).returns(Time.utc(2009,"apr",11,9,15,1))
     coffee_greeter_listener.expects(:speak).with("#{@bot.name} coffeestatus clear")
     coffee_greeter_listener.expects(:speak).with("#{@bot.name} coffeestatus")
     coffee_greeter_listener.process
