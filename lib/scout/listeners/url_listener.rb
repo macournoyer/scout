@@ -10,7 +10,7 @@ module Scout
       reacts_to LINK_RE
       
       def process
-        if message[LINK_RE, 1].match(/twitter\.com/i)
+        if message[LINK_RE, 1].match(/twitter\.com.+status.+/i)
           tweet_content = extract_tweet_content(message[LINK_RE, 1])
           unless tweet_content.blank?
             paste Text::Format.new(:text => tweet_content).paragraphs
