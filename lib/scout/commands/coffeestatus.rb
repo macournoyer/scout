@@ -32,11 +32,11 @@ EOS
       
       def statuses_message
         out = []
-        out << "Statuses:"
+        out << "Hu wanz cawfee?"
         statuses.each_pair do |person, coffee|
           out << "  #{person}: #{coffee}"
         end
-        out << "Total: #{statuses.size}"
+        out << "Total: #{statuses.size}" unless statuses.empty?
         out
       end
     end
