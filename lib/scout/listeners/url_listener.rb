@@ -14,12 +14,12 @@ module Scout
         when /twitter\.com.+status.+/i
           tweet_content = extract_tweet_content(message[LINK_RE, 1])
           unless tweet_content.blank?
-            paste Text::Format.new(:text => tweet_content).paragraphs
+            paste Text::Format.new(:text => tweet_content, :first_indent => 0).paragraphs
           end
         when %r(github\.com.+/tree/master)i
           github_description = extract_github_description(message[LINK_RE, 1])
           unless github_description.blank?
-            paste Text::Format.new(:text => github_description).paragraphs
+            paste Text::Format.new(:text => github_description, :first_indent => 0).paragraphs
           end
         else
           page_title = extract_page_title(message[LINK_RE, 1])
