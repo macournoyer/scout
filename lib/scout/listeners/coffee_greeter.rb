@@ -7,8 +7,8 @@ module Scout
         return if from.downcase == "bot"
         return unless from.match(/alexandra/i)
         if Time.now.hour <= 11
-          speak "#{@bot.name} coffeestatus clear"
-          speak "#{@bot.name} coffeestatus"
+          run_command('coffeestatus', ['clear'])
+          run_command('coffeestatus')
         end
       end
       
