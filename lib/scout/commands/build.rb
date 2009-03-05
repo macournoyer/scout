@@ -10,7 +10,8 @@ module Scout
         project("pony-cc", "pony")
         project("reception-cc", "reception")
         project("jobcaster-cc", "jobcaster")
-        project("pony-cc", "backstage")
+        project("backstage-cc", "backstage")
+        project("pony-cc", "lolshare")
       end
       
       def project(subdomain, project_name)
