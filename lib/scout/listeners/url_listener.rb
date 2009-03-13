@@ -10,6 +10,7 @@ module Scout
       reacts_to LINK_RE
       
       def process
+        log(message[LINK_RE, 1])
         case message[LINK_RE, 1]
         when /twitter\.com.+status.+/i
           tweet_content = extract_tweet_content(message[LINK_RE, 1])
