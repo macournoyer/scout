@@ -7,10 +7,13 @@ module Scout
   module Listeners
     class UrlListener < Scout::Listener
       LINK_RE = /href=\"(.*?)\"/
+      LINK2_RE = /href=\"(.*?)\"/
       reacts_to LINK_RE
+      reacts_to LINK2_RE
       
       def process
-        log(message[LINK_RE, 1])
+        log("1" + message[LINK_RE, 1])
+        log("2" + message[LINK2_RE, 1])
         case message[LINK_RE, 1]
         when /twitter\.com.+status.+/i
           tweet_content = extract_tweet_content(message[LINK_RE, 1])
