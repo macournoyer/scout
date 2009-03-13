@@ -6,27 +6,25 @@ require "text/format"
 module Scout
   module Listeners
     class UrlListener < Scout::Listener
-      LINK_RE = /href=\"(.*?)\"/
-      LINK2_RE = /href=\\"(.*?)\\"/
+      LINK_RE = %r(href=\"(.*?)\")
       reacts_to LINK_RE
-      reacts_to LINK2_RE
       
       def process
-        log("1" + message[LINK_RE, 1].to_s)
-        log("2" + message[LINK2_RE, 1].to_s)
-        case message[LINK_RE, 1]
+        url = message[LINK_RE, 1]
+        log "> #{url}"
+        case url
         when /twitter\.com.+status.+/i
-          tweet_content = extract_tweet_content(message[LINK_RE, 1])
+          tweet_content = extract_tweet_content(url)
           unless tweet_content.blank?
             paste Text::Format.new(:text => tweet_content, :first_indent => 0).paragraphs
           end
         when %r(github\.com.+/tree/master)i
-          github_description = extract_github_description(message[LINK_RE, 1])
+          github_description = extract_github_description(url)
           unless github_description.blank?
             paste Text::Format.new(:text => github_description, :first_indent => 0).paragraphs
           end
         else
-          page_title = extract_page_title(message[LINK_RE, 1])
+          page_title = extract_page_title(url)
           unless page_title.blank?
             speak "Last link: #{page_title}"
           end
