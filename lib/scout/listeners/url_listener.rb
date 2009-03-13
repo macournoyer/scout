@@ -7,7 +7,7 @@ module Scout
   module Listeners
     class UrlListener < Scout::Listener
       LINK_RE = /href=\"(.*?)\"/
-      LINK2_RE = /href=\"(.*?)\"/
+      LINK2_RE = /href=\\"(.*?)\\"/
       reacts_to LINK_RE
       reacts_to LINK2_RE
       
