@@ -12,8 +12,8 @@ module Scout
       reacts_to LINK2_RE
       
       def process
-        log("1" + message[LINK_RE, 1])
-        log("2" + message[LINK2_RE, 1])
+        log("1" + message[LINK_RE, 1].to_s)
+        log("2" + message[LINK2_RE, 1].to_s)
         case message[LINK_RE, 1]
         when /twitter\.com.+status.+/i
           tweet_content = extract_tweet_content(message[LINK_RE, 1])
