@@ -6,11 +6,12 @@ module Scout
     
     def initialize(room, options={})
       raise InvalidRoom, 'You need to supply a Tinder::Room object' unless room.is_a?(Tinder::Room)
-      @room     = room
-      @name     = options[:name] || 'bot'
-      @sleep    = options[:sleep] || 1
-      @config   = options[:config]
-      @continue = true
+      @room        = room
+      @name        = options[:name] || 'bot'
+      @sleep       = options[:sleep] || 1
+      @config      = options[:config]
+      @continue    = true
+      @message_ids = [] # ids of message already processed
       
       load_data
     end
@@ -30,8 +31,10 @@ module Scout
     
     def process
       messages = fetch_messages
+      messages.reject! { |m| @message_ids.include?(m[:id])  }
       process_commands(messages)
       notify_listeners(messages)
+      @message_ids += messages.map { |m| m[:id] }
       write_data
       sleep @sleep
     rescue Timeout::Error
