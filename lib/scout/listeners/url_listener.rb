@@ -6,7 +6,7 @@ require "text/format"
 module Scout
   module Listeners
     class UrlListener < Scout::Listener
-      LINK_RE = %r(href=\"(.*?)\")
+      LINK_RE = %r(href=\\"(.*?)\\")
       reacts_to LINK_RE
       
       def process
