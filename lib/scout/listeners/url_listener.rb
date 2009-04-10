@@ -13,7 +13,7 @@ module Scout
         url = message[LINK_RE, 1]
         log "> #{url}"
         case url
-        when /twitter\.com.+status.+/i
+        when %r(twitter\.com.+/status/.+)i
           tweet_content = extract_tweet_content(url)
           unless tweet_content.blank?
             paste Text::Format.new(:text => tweet_content, :first_indent => 0).paragraphs
@@ -32,15 +32,15 @@ module Scout
       end
       
       def extract_page_title(url)
-        extract_html_content(url, ':title')
+        Hpricot(extract_html_content(url, ":title")).inner_text
       end
       
       def extract_tweet_content(url)
-        extract_html_content(url, 'span.entry-content')
+        Hpricot(extract_html_content(url, 'span.entry-content')).inner_text
       end
       
       def extract_github_description(url)
-        extract_html_content(url, 'span#repository_description')
+        Hpricot(extract_html_content(url, 'span#repository_description')).inner_text
       end
       
       def extract_html_content(url, hpricot_matcher)
