@@ -11,6 +11,7 @@ module Scout
         project("reception-cc", "reception")
         project("jobcaster-cc", "jobcaster")
         project("backstage-cc", "backstage")
+        project("backstage-cc", "hamster")
         project("pony-cc", "lolshare")
       end
       
