@@ -49,8 +49,6 @@ module Scout
           doc = Hpricot(open(url))
           (doc/hpricot_matcher).inner_html
         end
-      rescue Exception
-        nil
       end
 
     end
