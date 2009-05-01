@@ -32,23 +32,25 @@ module Scout
       end
       
       def extract_page_title(url)
-        Hpricot(extract_html_content(url, ":title")).inner_text
+        extract_html_content url, ":title"
       end
       
       def extract_tweet_content(url)
-        Hpricot(extract_html_content(url, 'span.entry-content')).inner_text
+        extract_html_content url, 'span.entry-content'
       end
       
       def extract_github_description(url)
-        Hpricot(extract_html_content(url, 'span#repository_description')).inner_text
+        extract_html_content url, 'span#repository_description'
       end
       
       def extract_html_content(url, hpricot_matcher)
         return nil unless url
         Timeout.timeout(2) do
           doc = Hpricot(open(url))
-          (doc/hpricot_matcher).inner_html
+          (doc/hpricot_matcher).inner_text
         end
+      rescue Exception
+        nil
       end
 
     end
