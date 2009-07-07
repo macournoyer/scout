@@ -7,6 +7,7 @@ module Scout
       help    "Show build status"
       
       def process
+        project("quantumleap-cc", "quantumleap")
         project("pony-cc", "pony")
         project("reception-cc", "reception")
         project("jobcaster-cc", "jobcaster")
