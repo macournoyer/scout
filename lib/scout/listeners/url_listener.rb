@@ -13,7 +13,7 @@ module Scout
         url = message[LINK_RE, 1]
         log "> #{url}"
         case url
-        when %r(twitter\.com.+/status/.+)i
+        when %r(twitter\.com.+/status(es)?/.+)i
           tweet_content = extract_tweet_content(url)
           unless tweet_content.blank?
             paste Text::Format.new(:text => tweet_content, :first_indent => 0).paragraphs
