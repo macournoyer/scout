@@ -7,7 +7,8 @@ module Scout
   module Listeners
     class UrlListener < Scout::Listener
       LINK_RE = %r(href=\\"(.*?)\\")
-      reacts_to LINK_RE
+      # Disable for now, causes BUS error in Hpricot
+      # reacts_to LINK_RE
       
       def process
         url = message[LINK_RE, 1]
